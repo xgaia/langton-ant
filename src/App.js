@@ -106,13 +106,13 @@ export default class App extends Component {
 
   getNewPosition (dir, callback) {
     /* get the position when ant can pass througt walls */
-    const newX = dir === 0 ? callback(this.state.antPosition[0] - 1, this.state.x_len - 1) : 
-                                  dir === 2 ? callback(this.state.antPosition[0] + 1, this.state.x_len - 1) : 
-                                  this.state.antPosition[0]
+    const newX = dir === 0 ? callback(this.state.antPosition[0] - 1, this.state.x_len - 1) : dir === 2 ?
+                             callback(this.state.antPosition[0] + 1, this.state.x_len - 1) : 
+                             this.state.antPosition[0]
 
-    const newY = dir === 3 ? callback(this.state.antPosition[1] - 1, this.state.y_len - 1) :
-                                  dir === 1 ? callback(this.state.antPosition[1] + 1, this.state.y_len - 1) : 
-                                  this.state.antPosition[1]
+    const newY = dir === 3 ? callback(this.state.antPosition[1] - 1, this.state.y_len - 1) : dir === 1 ?
+                             callback(this.state.antPosition[1] + 1, this.state.y_len - 1) : 
+                             this.state.antPosition[1]
 
     return [newX, newY]
 

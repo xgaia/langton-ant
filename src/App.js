@@ -21,8 +21,8 @@ export default class App extends Component {
       x_len: 15,
       y_len: 15,
       matrix: [],
-      ant_position: [0, 0],
-      ant_direction: 0,
+      antPosition: [0, 0],
+      antDirection: 0,
       timer: null,
     }
     this.simulate = this.simulate.bind(this)
@@ -57,8 +57,8 @@ export default class App extends Component {
     clearTimeout(this.state.timer);
     this.setState({
       matrix: this.initMatrix(),
-      ant_position: this.initPosition(),
-      ant_direction: this.initDirection(),
+      antPosition: this.initPosition(),
+      antDirection: this.initDirection(),
     })
   }
 
@@ -70,40 +70,40 @@ export default class App extends Component {
   simulate () {
     /* Start the simulation */
     console.log(this.state.matrix)
-    console.log(this.state.ant_position)
+    console.log(this.state.antPosition)
 
     // Get current value (black or white) and reverse in matrix
     let currentVal
     const newMatrix = this.state.matrix.map((row, i) => {
       return row.map((col, j) => {
         // get current value
-        if (i === this.state.ant_position[0] && j === this.state.ant_position[1]) {
+        if (i === this.state.antPosition[0] && j === this.state.antPosition[1]) {
           currentVal = col
         }
-        return i === this.state.ant_position[0] && j === this.state.ant_position[1] ? !col : col
+        return i === this.state.antPosition[0] && j === this.state.antPosition[1] ? !col : col
       })
     })
 
     // New ant direction
-    const new_index = currentVal ? this.state.ant_direction + 1 : this.state.ant_direction - 1
-    const new_dir = this.circularGet(this.compass, new_index)
+    const new_index = currentVal ? this.state.antDirection + 1 : this.state.antDirection - 1
+    const newDir = this.circularGet(this.compass, new_index)
 
     // New ant position
-    const new_x = new_dir === 0 ? this.cropMax(this.state.ant_position[0] - 1, this.state.x_len - 1) : 
-                                  new_dir === 2 ? this.cropMax(this.state.ant_position[0] + 1, this.state.x_len - 1) : 
-                                  this.state.ant_position[0]
+    const newX = newDir === 0 ? this.cropMax(this.state.antPosition[0] - 1, this.state.x_len - 1) : 
+                                  newDir === 2 ? this.cropMax(this.state.antPosition[0] + 1, this.state.x_len - 1) : 
+                                  this.state.antPosition[0]
 
-    const new_y = new_dir === 3 ? this.cropMax(this.state.ant_position[1] - 1, this.state.y_len - 1) :
-                                  new_dir === 1 ? this.cropMax(this.state.ant_position[1] + 1, this.state.y_len - 1) : 
-                                  this.state.ant_position[1]
+    const newY = newDir === 3 ? this.cropMax(this.state.antPosition[1] - 1, this.state.y_len - 1) :
+                                  newDir === 1 ? this.cropMax(this.state.antPosition[1] + 1, this.state.y_len - 1) : 
+                                  this.state.antPosition[1]
 
-    const new_pos = [new_x, new_y]
+    const new_pos = [newX, newY]
 
     // set state
     this.setState({
       matrix: newMatrix,
-      ant_position: new_pos,
-      ant_direction: new_dir,
+      antPosition: new_pos,
+      antDirection: newDir,
       timer: setTimeout(this.simulate, 500)
     })
   }
@@ -139,7 +139,7 @@ export default class App extends Component {
 
   checkPosition (i, j) {
     /* Check if i and j is the ant position */
-    if (i === this.state.ant_position[0] && j === this.state.ant_position[1]) {
+    if (i === this.state.antPosition[0] && j === this.state.antPosition[1]) {
       return true
     }
     return false
@@ -161,7 +161,7 @@ export default class App extends Component {
             {row.map((col, j) => (
               <span className={col ? "cell white-cell" : "cell black-cell"} key={j}>
               {this.checkPosition(i, j) ? (
-                <img className={"ant " + "ant-" + this.cssCompass[this.state.ant_direction]} src={antImg} alt="ant" />
+                <img className={"ant " + "ant-" + this.cssCompass[this.state.antDirection]} src={antImg} alt="ant" />
               ) : null}
               </span>
             ))}

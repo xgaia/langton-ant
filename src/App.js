@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import './App.css'
-import antImg from './ant.png';
+import antImg from './ant.png'
+import { Container, Button } from "reactstrap"
 
 
 export default class App extends Component {
@@ -117,12 +118,13 @@ export default class App extends Component {
   render() {
 
     return (
-      <div className="app">
+      <Container fluid className="app">
+      <Container>
+        <Button className="btn" onClick={this.simulate}>Start</Button>{" "}
+        <Button className="btn" onClick={this.stop}>Stop</Button>{" "}
+        <Button className="btn" onClick={this.initSimulation}>Reset</Button>
+      </Container>
       <div>
-        <button className="btn" onClick={this.simulate}>Start</button>{" "}
-        <button className="btn" onClick={this.stop}>Stop</button>{" "}
-        <button className="btn" onClick={this.initSimulation}>Reset</button>
-      </div>
         {this.state.matrix.map((row, i) => (
           <div className="flex matrix-row" key={i}>
             {row.map((col, j) => (
@@ -134,7 +136,8 @@ export default class App extends Component {
             ))}
           </div>
         ))}
-      </div>
+        </div>
+      </Container>
     )
   }
 }

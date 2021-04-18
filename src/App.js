@@ -3,6 +3,9 @@ import './App.css'
 import antImg from './ant.png'
 import { Container, Button } from "reactstrap"
 
+/**
+ * Longton Ant simulation single page app 
+ */
 
 export default class App extends Component {
   constructor (props) {
@@ -28,6 +31,7 @@ export default class App extends Component {
   }
 
   initMatrix() {
+    /* Init a matrix (a list of lists) with random true or false value representing the chessboard */
     return Array.apply(null, {length: this.state.x_len}).map(() => 
       {
         return Array.apply(null, {length: this.state.y_len}).map(() => {
@@ -36,20 +40,38 @@ export default class App extends Component {
       })
   }
 
+  initPosition () {
+    /* Get a random position on the matrix */
+    const x = Math.floor(Math.random() * (this.state.x_len))
+    const y = Math.floor(Math.random() * (this.state.y_len))
+    return [x, y]
+  }
+
+  initDirection () {
+    /* Get a random direction (0, 1, 2 or 3) representing north, south, east or west */
+    return Math.floor(Math.random() * 4)
+  }
+
   initSimulation () {
+    /* Init/Reset the simulation. Stop the simulation and set matrix, position and diretion. */
     clearTimeout(this.state.timer);
     this.setState({
       matrix: this.initMatrix(),
-      ant_position: [Math.floor(Math.random() * (this.state.x_len)), Math.floor(Math.random() * (this.state.y_len))],
-      ant_direction: Math.floor(Math.random() * 4),
+      ant_position: this.initPosition(),
+      ant_direction: this.initDirection(),
     })
   }
 
   stop () {
+    /* Stop the simulation */
     clearTimeout(this.state.timer)
   }
 
   simulate () {
+    /* Start the simulation */
+    console.log(this.state.matrix)
+    console.log(this.state.ant_position)
+
     // Get current value (black or white) and reverse in matrix
     let currentVal
     const newMatrix = this.state.matrix.map((row, i) => {
@@ -64,11 +86,16 @@ export default class App extends Component {
 
     // New ant direction
     const new_index = currentVal ? this.state.ant_direction + 1 : this.state.ant_direction - 1
-    const new_dir = this.circular(this.compass, new_index)
+    const new_dir = this.circularGet(this.compass, new_index)
 
-    // New position
-    const new_x = new_dir === 0 ? this.getIndexMaxi(this.state.x_len, this.state.ant_position[0], -1) : new_dir === 2 ? this.getIndexMaxi(this.state.x_len, this.state.ant_position[0], 1) : this.state.ant_position[0]
-    const new_y = new_dir === 3 ? this.getIndexMaxi(this.state.x_len, this.state.ant_position[1], -1) : new_dir === 1 ? this.getIndexMaxi(this.state.x_len, this.state.ant_position[1], 1) : this.state.ant_position[1]
+    // New ant position
+    const new_x = new_dir === 0 ? this.cropMax(this.state.ant_position[0] - 1, this.state.x_len - 1) : 
+                                  new_dir === 2 ? this.cropMax(this.state.ant_position[0] + 1, this.state.x_len - 1) : 
+                                  this.state.ant_position[0]
+
+    const new_y = new_dir === 3 ? this.cropMax(this.state.ant_position[1] - 1, this.state.y_len - 1) :
+                                  new_dir === 1 ? this.cropMax(this.state.ant_position[1] + 1, this.state.y_len - 1) : 
+                                  this.state.ant_position[1]
 
     const new_pos = [new_x, new_y]
 
@@ -81,19 +108,22 @@ export default class App extends Component {
     })
   }
 
-  circular (arr, n) {
+  circularGet (arr, n) {
+    /* Get a value in a list, but circular if index is larger than the list */
     return arr[(n % arr.length + arr.length) % arr.length]
   }
 
-  getIndexMaxi (max, pos, val) {
-    if (pos + val >= max) {
-      return max
+  cropMax(val, max) {
+    /* if the value is larger the the max, return the max. If val is negative, return 0 */
+    if (val > max) {
+      return this.neverNegative(max)
     } else {
-      return this.neverNegative(pos + val)
+      return this.neverNegative(val)
     }
   }
 
   neverNegative(n) {
+    /* if n is negative, return 0 */
     if (n < 0) {
       return 0
     } else {
@@ -108,6 +138,7 @@ export default class App extends Component {
 
 
   checkPosition (i, j) {
+    /* Check if i and j is the ant position */
     if (i === this.state.ant_position[0] && j === this.state.ant_position[1]) {
       return true
     }
@@ -116,7 +147,7 @@ export default class App extends Component {
 
 
   render() {
-
+    /* Render the matrix and the ant */
     return (
       <Container fluid className="app">
       <Container>

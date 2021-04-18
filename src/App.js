@@ -196,7 +196,7 @@ export default class App extends Component {
           <li>At a black square, turn 90° counter-clockwise, flip the color of the square, move forward one unit</li>
         </ul>
         <p>Use the button to start, stop and reset the simulation. The switch allows the ant to cross or not the walls of the chessboard.</p>
-        <p>Sources are available on <a target="_blank" rel="noreferrer" href="http://github.com/xgaia/langton-ant">GitHub</a> under <a target="_blank" rel="noreferrer" href="https://github.com/xgaia/langton-ant/blob/main/LICENSE">AGPL-3.0</a> licence.</p>
+        <p>Sources are available on <a target="_blank" rel="noreferrer" href="http://github.com/xgaia/langton-ant">GitHub</a> under <a target="_blank" rel="noreferrer" href="https://github.com/xgaia/langton-ant/blob/main/LICENSE">AGPL-3.0</a> license.</p>
       </Container>
 
       <Container className="center mb-3">

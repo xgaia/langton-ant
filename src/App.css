@@ -1,13 +1,23 @@
 .app {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
   flex-direction: column;
   align-items: center;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #282c34;
+  min-height: 100vh;
   color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+.wall {
+  border: solid #9c5100;
+}
+
+.circular {
+  border: dashed #1ec2ff;
 }
 
 .cell {

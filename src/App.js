@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import './App.css'
 import antImg from './ant.png'
-import { Container, Button, FormGroup, Label, CustomInput } from "reactstrap"
+import { Container, Button, FormGroup, Label, CustomInput, Col } from "reactstrap"
 
 /**
  * Longton Ant simulation single page app 
@@ -24,13 +24,15 @@ export default class App extends Component {
       antPosition: [0, 0],
       antDirection: 0,
       timer: null,
-      circular: false
+      circular: false,
+      speed: 50,
     }
     this.simulate = this.simulate.bind(this)
     this.initSimulation = this.initSimulation.bind(this)
     this.stop = this.stop.bind(this)
     this.cropMax = this.cropMax.bind(this)
     this.toggleCircular = this.toggleCircular.bind(this)
+    this.toogleSpeed = this.toogleSpeed.bind(this)
   }
 
   initMatrix() {
@@ -100,7 +102,7 @@ export default class App extends Component {
       matrix: newMatrix,
       antPosition: newPos,
       antDirection: newDir,
-      timer: setTimeout(this.simulate, 500)
+      timer: setTimeout(this.simulate, (100 - this.state.speed )* 10)
     })
   }
 
@@ -174,6 +176,13 @@ export default class App extends Component {
     })
   }
 
+  toogleSpeed (event) {
+    console.log(event.target.value)
+    this.setState({
+      speed: event.target.value
+    })
+  }
+
   render() {
     /* Render the matrix and the ant */
     return (
@@ -195,6 +204,10 @@ export default class App extends Component {
         <Button className="btn" onClick={this.stop}>Stop</Button>{" "}
         <Button className="btn" onClick={this.initSimulation}>Reset</Button>
         <CustomInput value={this.state.circular} onClick={this.toggleCircular} type="switch" id="switch" name="customSwitch" label="Circular chessboard" />
+        <Col className="center" sm={{ size: 6, offset: 3 }}>
+          <Label for="speed">Speed</Label>
+          <CustomInput value={this.state.speed} onChange={this.toogleSpeed} type="range" id="speed" name="speed" />
+        </Col>
       </Container>
 
       <div className={this.state.circular ? "circular" : "wall"}>

@@ -125,11 +125,11 @@ export default class App extends Component {
 
   circularMax (val, max) {
     /* if the value is larger the the max, return 0. If val is negative, return max */
-    if (val >= max) {
+    if (val > max) {
       return 0
     }
 
-    if (val <= 0) {
+    if (val < 0) {
       return max
     }
 

@@ -21,11 +21,33 @@
 }
 
 .cell {
-  height: 40px;
-  width: 40px;
+  height: 3em;
+  width: 3em;
   margin: 0 2px 2px 0;
   border: 1px solid black;
   display: inline-block;
+}
+
+/*Phones*/
+@media screen and (max-width: 640px) {
+  .cell {
+    height: 1em;
+    width: 1em;
+    margin: 0 2px 2px 0;
+    border: 1px solid black;
+    display: inline-block;
+  }
+}
+
+/*Tablettes*/
+@media screen and (max-width: 767px) {
+  .cell {
+    height: 1.3em;
+    width: 1.3em;
+    margin: 0 2px 2px 0;
+    border: 1px solid black;
+    display: inline-block;
+  }
 }
 
 .flex {
